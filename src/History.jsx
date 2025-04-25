@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Layout from './Layout';
 
 function History() {
   const [moods, setMoods] = useState([]);
@@ -11,7 +12,7 @@ function History() {
   }, []);
 
   return (
-    <div>
+    <Layout>
       <h2>HISTORY 📜</h2>
       <ul>
         {moods.map((mood) => (
@@ -20,7 +21,7 @@ function History() {
           </li>
         ))}
       </ul>
-    </div>
+    </Layout>
   );
 }
 

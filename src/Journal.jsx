@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Layout from './Layout';
 
 export default function Journal() {
   const [entries, setEntries] = useState([]);
@@ -24,33 +25,35 @@ export default function Journal() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Assuming the API returns the newly created entry
         setEntries([...entries, { id: data.id, entry: newEntry, date: new Date().toISOString() }]);
-        setNewEntry(""); // Clear the input field after submission
+        setNewEntry("");
       })
       .catch((error) => console.error("Error saving entry:", error));
   };
 
   return (
-    <div>
-      <h2>JOURNAL</h2>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          placeholder="Add a reflection..."
-          value={newEntry}
-          onChange={(e) => setNewEntry(e.target.value)}
-        ></textarea>
-        <button type="submit">Save</button>
-      </form>
-      <h3>Previous Entries</h3>
+    <Layout>
       <div>
-        {entries.map((entry) => (
-          <div key={entry.id}>
-            <p>{entry.entry}</p>
-            <p>{new Date(entry.date).toLocaleString()}</p>
-          </div>
-        ))}
+        <h2>JOURNAL 📝</h2>
+        <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
+          <textarea
+            placeholder="Add a reflection..."
+            value={newEntry}
+            onChange={(e) => setNewEntry(e.target.value)}
+            style={{ width: "100%", height: "100px", marginBottom: "10px" }}
+          ></textarea>
+          <button type="submit" style={{ padding: "8px 16px" }}>Save</button>
+        </form>
+        <h3>Previous Entries</h3>
+        <div>
+          {entries.map((entry) => (
+            <div key={entry.id} style={{ background: "#f9f9f9", padding: "10px", marginBottom: "10px", borderRadius: "5px" }}>
+              <p>{entry.entry}</p>
+              <p style={{ fontSize: "0.9em", color: "gray" }}>{new Date(entry.date).toLocaleString()}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
